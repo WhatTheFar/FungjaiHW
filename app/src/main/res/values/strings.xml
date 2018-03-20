@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FungjaiHW</string>
+    <string name="zine_cover_image">Zine cover image</string>
+    <string name="track_cover_image">Track cover image</string>
+</resources>
