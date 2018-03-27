@@ -3,7 +3,7 @@ package com.whatthefar.fungjaihw.feature
 import android.app.Activity
 import android.app.Application
 import com.whatthefar.fungjaihw.BuildConfig
-import com.whatthefazr.fungjaihw.di.DaggerAppComponent
+import com.whatthefar.fungjaihw.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
