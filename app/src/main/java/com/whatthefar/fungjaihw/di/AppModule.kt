@@ -1,6 +1,7 @@
 package com.whatthefar.fungjaihw.di
 
 import android.app.Application
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.whatthefar.fungjaihw.service.ApiService
 import com.whatthefar.fungjaihw.service.repository.MusicRepository
 import com.whatthefar.fungjaihw.service.repository.MusicRepositoryImpl
@@ -28,6 +29,7 @@ class AppModule {
             .Builder()
             .baseUrl("https://us-central1-fjawesomeintern.cloudfunctions.net/")
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
     @Provides

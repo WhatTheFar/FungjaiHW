@@ -1,11 +1,15 @@
 package com.whatthefar.fungjaihw.feature.main
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.whatthefar.fungjaihw.R
+import com.whatthefar.fungjaihw.feature.DaggerViewModelFactory
+import com.whatthefar.fungjaihw.model.Outcome
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -15,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mViewModel: MainViewModel
     @Inject
-    lateinit var mainViewModelFactory: MainViewModelFactory
+    lateinit var mainViewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -41,7 +45,10 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity,
                 Observer {
                     Timber.i("onChange : MusicListObserver")
-                    (music_recycler_view.adapter as MusicAdapter).musicList = it
+                    when (it) {
+                        is Outcome.Success -> (music_recycler_view.adapter as MusicAdapter).musicList = it.data
+                        is Outcome.Failure -> Timber.e(it.e)
+                    }
                 }
         )
     }

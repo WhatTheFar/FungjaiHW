@@ -5,7 +5,7 @@ import android.databinding.ObservableField
 /**
  * Created by Far on 21/3/2018 AD.
  */
-class TrackBinding(music: Music) {
+class TrackBinding(music: Music)  {
 
     val coverUrl: ObservableField<String> = ObservableField()
     val title: ObservableField<String> = ObservableField()
