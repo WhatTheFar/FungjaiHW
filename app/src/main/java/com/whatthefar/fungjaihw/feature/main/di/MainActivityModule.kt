@@ -1,4 +1,4 @@
-package com.whatthefar.fungjaihw.di
+package com.whatthefar.fungjaihw.feature.main.di
 
 import dagger.Module
 

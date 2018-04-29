@@ -2,11 +2,12 @@ package com.whatthefar.fungjaihw.di
 
 import android.app.Application
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import com.whatthefar.fungjaihw.service.ApiService
-import com.whatthefar.fungjaihw.service.repository.MusicRepository
-import com.whatthefar.fungjaihw.service.repository.MusicRepositoryImpl
+import com.whatthefar.fungjaihw.data.remote.ApiService
+import com.whatthefar.fungjaihw.data.repository.MusicRepository
+import com.whatthefar.fungjaihw.data.repository.MusicRepositoryImpl
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -21,6 +22,9 @@ class AppModule {
     fun provideContext(application: Application) = application.applicationContext
 
     @Provides
+    fun provideCompositeDisposable() = CompositeDisposable();
+
+    @Provides
     fun provideMusicRepository(apiService: ApiService): MusicRepository = MusicRepositoryImpl(apiService)
 
     @Provides
@@ -32,6 +36,7 @@ class AppModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
+    @Singleton
     @Provides
     fun provideNewsService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 

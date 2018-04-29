@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.whatthefar.fungjaihw.R
+import com.whatthefar.fungjaihw.data.model.Music
 import com.whatthefar.fungjaihw.databinding.ItemTrackBinding
 import com.whatthefar.fungjaihw.databinding.ItemZineBinding
-import com.whatthefar.fungjaihw.model.Music
-import com.whatthefar.fungjaihw.model.TrackBinding
-import com.whatthefar.fungjaihw.model.ZineBinding
+import com.whatthefar.fungjaihw.data.model.Track
+import com.whatthefar.fungjaihw.data.model.Zine
 
 /**
  * Created by Far on 20/3/2018 AD.
@@ -54,9 +54,9 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
     class MusicViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(music: Music) {
             if (music.type == "track") {
-                (binding as ItemTrackBinding).track = TrackBinding(music)
+                (binding as ItemTrackBinding).track = Track(music)
             } else {
-                (binding as ItemZineBinding).zine = ZineBinding(music)
+                (binding as ItemZineBinding).zine = Zine(music)
             }
         }
     }

@@ -1,8 +1,7 @@
-package com.whatthefar.fungjaihw.service
+package com.whatthefar.fungjaihw.data.remote
 
-import com.whatthefar.fungjaihw.model.Music
+import com.whatthefar.fungjaihw.data.model.Music
 import io.reactivex.Observable
-import retrofit2.Call
 import retrofit2.http.GET
 
 /**

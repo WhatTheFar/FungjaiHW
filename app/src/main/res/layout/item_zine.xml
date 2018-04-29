@@ -7,7 +7,7 @@
 
         <variable
             name="zine"
-            type="com.whatthefar.fungjaihw.model.ZineBinding" />
+            type="com.whatthefar.fungjaihw.data.model.Zine" />
     </data>
 
     <android.support.constraint.ConstraintLayout

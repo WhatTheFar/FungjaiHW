@@ -2,9 +2,11 @@ package com.whatthefar.fungjaihw.feature.main
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.whatthefar.fungjaihw.model.Music
-import com.whatthefar.fungjaihw.model.Outcome
-import com.whatthefar.fungjaihw.service.repository.MusicRepository
+import com.whatthefar.fungjaihw.data.model.Music
+import com.whatthefar.fungjaihw.common.networking.Outcome
+import com.whatthefar.fungjaihw.common.networking.toLiveData
+import com.whatthefar.fungjaihw.data.repository.MusicRepository
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -13,15 +15,21 @@ import javax.inject.Inject
  */
 class MainViewModel
 @Inject constructor(
-        private val musicRepository: MusicRepository
+        private val musicRepo: MusicRepository,
+        private val compositeDisposable: CompositeDisposable
 ) : ViewModel() {
 
-    init {
-        Timber.wtf("MainViewModel init")
+    val musicListObservable: LiveData<Outcome<List<Music>>> by lazy {
+        musicRepo.dataFetchOutcome.toLiveData(compositeDisposable)
     }
 
-    val musicListObservable: LiveData<Outcome<List<Music>>> by lazy {
-        musicRepository.getMusics()
+    fun getMusics() {
+        musicRepo.getMusics()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 
 }

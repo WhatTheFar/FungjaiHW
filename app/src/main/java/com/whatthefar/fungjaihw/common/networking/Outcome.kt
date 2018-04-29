@@ -1,4 +1,4 @@
-package com.whatthefar.fungjaihw.model
+package com.whatthefar.fungjaihw.common.networking
 
 /**
  * Created by karn on 18/1/18.

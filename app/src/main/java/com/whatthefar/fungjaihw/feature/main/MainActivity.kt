@@ -1,15 +1,13 @@
 package com.whatthefar.fungjaihw.feature.main
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.whatthefar.fungjaihw.R
-import com.whatthefar.fungjaihw.feature.DaggerViewModelFactory
-import com.whatthefar.fungjaihw.model.Outcome
+import com.whatthefar.fungjaihw.common.networking.Outcome
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -30,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         initInstances()
         initObservers()
+
+        mViewModel.getMusics()
     }
 
     private fun initInstances() {
@@ -52,4 +52,5 @@ class MainActivity : AppCompatActivity() {
                 }
         )
     }
+
 }

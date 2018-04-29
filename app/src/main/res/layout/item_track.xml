@@ -7,7 +7,7 @@
 
         <variable
             name="track"
-            type="com.whatthefar.fungjaihw.model.TrackBinding" />
+            type="com.whatthefar.fungjaihw.data.model.Track" />
     </data>
 
 

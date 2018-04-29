@@ -2,6 +2,7 @@ package com.whatthefar.fungjaihw.di
 
 
 import com.whatthefar.fungjaihw.feature.main.MainActivity
+import com.whatthefar.fungjaihw.feature.main.di.MainActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
