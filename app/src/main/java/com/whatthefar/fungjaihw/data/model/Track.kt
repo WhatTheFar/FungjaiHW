@@ -10,6 +10,6 @@ data class Track(
         val title: String?,
         val artist: String?,
         val coverUrl: String?
-)  {
+) {
     constructor(music: Music) : this(music.song, music.artist, music.cover)
 }

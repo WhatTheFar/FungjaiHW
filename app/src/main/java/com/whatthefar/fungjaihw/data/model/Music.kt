@@ -14,4 +14,9 @@ data class Music(
         @SerializedName("description") var description: String? = null,
         @SerializedName("title") var title: String? = null,
         @SerializedName("url") var url: String? = null
-)
+) {
+    companion object {
+        const val ZINE = "zine"
+        const val TRACK = "track"
+    }
+}

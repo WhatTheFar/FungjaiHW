@@ -1,35 +1,28 @@
 package com.whatthefar.fungjaihw.data.repository
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import com.whatthefar.fungjaihw.common.networking.*
 import com.whatthefar.fungjaihw.data.model.Music
-import com.whatthefar.fungjaihw.common.networking.Outcome
-import com.whatthefar.fungjaihw.common.networking.failed
-import com.whatthefar.fungjaihw.common.networking.loading
-import com.whatthefar.fungjaihw.common.networking.success
 import com.whatthefar.fungjaihw.data.remote.ApiService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by Far on 20/3/2018 AD.
  */
-interface MusicRepository {
-    val dataFetchOutcome: PublishSubject<Outcome<List<Music>>>
-    fun getMusics()
-}
 
-class MusicRepositoryImpl(private val apiService: ApiService) : MusicRepository {
+class MusicRepository
+@Inject constructor(
+        private val apiService: ApiService,
+        private val scheduler: Scheduler
+) {
 
-    override val dataFetchOutcome: PublishSubject<Outcome<List<Music>>> = PublishSubject.create<Outcome<List<Music>>>()
+    val dataFetchOutcome: PublishSubject<Outcome<List<Music>>> = PublishSubject.create<Outcome<List<Music>>>()
 
-    override fun getMusics() {
+    fun fetchMusics(compositeDisposable: CompositeDisposable) {
         dataFetchOutcome.loading(true)
         apiService.getMusicList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .performOnBackOutOnMain(scheduler)
                 .subscribe(
                         {
                             dataFetchOutcome.success(it)
@@ -38,5 +31,6 @@ class MusicRepositoryImpl(private val apiService: ApiService) : MusicRepository 
                             dataFetchOutcome.failed(it)
                         }
                 )
+                .addTo(compositeDisposable)
     }
 }

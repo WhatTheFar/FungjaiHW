@@ -9,6 +9,7 @@ import javax.inject.Singleton
 /**
  * Created by Far on 30/3/2018 AD.
  */
+
 @Singleton
 class DaggerViewModelFactory
 @Inject constructor(

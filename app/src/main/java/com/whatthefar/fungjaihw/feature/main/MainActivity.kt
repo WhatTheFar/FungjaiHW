@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 Observer {
                     Timber.i("onChange : MusicListObserver")
                     when (it) {
-                        is Outcome.Success -> (music_recycler_view.adapter as MusicAdapter).musicList = it.data
+                        is Outcome.Success -> (music_recycler_view.adapter as? MusicAdapter)?.submitList(it.data)
                         is Outcome.Failure -> Timber.e(it.e)
                     }
                 }

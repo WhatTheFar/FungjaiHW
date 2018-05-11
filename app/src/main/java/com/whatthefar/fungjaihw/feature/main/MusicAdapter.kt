@@ -2,6 +2,9 @@ package com.whatthefar.fungjaihw.feature.main
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
+import android.support.v7.recyclerview.extensions.AsyncDifferConfig
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,49 +18,51 @@ import com.whatthefar.fungjaihw.data.model.Zine
 /**
  * Created by Far on 20/3/2018 AD.
  */
-class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
+class MusicAdapter :
+        ListAdapter<Music, MusicAdapter.MusicViewHolder>(
+                AsyncDifferConfig
+                        .Builder(MusicDiffCallback())
+                        .build()
+        ) {
 
-    var musicList: List<Music>? = null
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
-        return MusicViewHolder(DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                viewType,
-                parent,
-                false
-        ))
-    }
-
-    override fun getItemCount(): Int {
-        musicList?.let {
-            return it.size
-        }
-        return 0
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder =
+            MusicViewHolder(
+                    DataBindingUtil.inflate(
+                            LayoutInflater.from(parent.context),
+                            viewType,
+                            parent,
+                            false
+                    )
+            )
 
     override fun getItemViewType(position: Int): Int {
-        return when (musicList!![position].type) {
-            "track" -> R.layout.item_track
-            "zine" -> R.layout.item_zine
+        return when (getItem(position).type) {
+            Music.TRACK -> R.layout.item_track
+            Music.ZINE -> R.layout.item_zine
             else -> R.layout.item_track
         }
     }
 
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
-        holder.bind(musicList!![position])
+        holder.bind(getItem(position))
     }
 
     class MusicViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(music: Music) {
-            if (music.type == "track") {
-                (binding as ItemTrackBinding).track = Track(music)
-            } else {
-                (binding as ItemZineBinding).zine = Zine(music)
+            when (binding) {
+                is ItemTrackBinding -> binding.track = Track(music)
+                is ItemZineBinding -> binding.zine = Zine(music)
             }
+        }
+    }
+
+    class MusicDiffCallback : DiffUtil.ItemCallback<Music>() {
+        override fun areItemsTheSame(oldItem: Music, newItem: Music): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Music, newItem: Music): Boolean {
+            return oldItem == newItem
         }
     }
 }
